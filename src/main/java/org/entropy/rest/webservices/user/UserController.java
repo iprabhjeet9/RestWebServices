@@ -24,11 +24,13 @@ public class UserController {
 	@Autowired
 	UserDAO userDAO;
 	
-	//getAllUser
+	/**
+	//Query String
 	@GetMapping(path="/hello")
 	public String hello(@RequestParam(name="msg",required=false,defaultValue="world") String msg) {
 		return "Hello "+msg;
 	}
+	*/
 	
 	
 	@GetMapping(path="/users")

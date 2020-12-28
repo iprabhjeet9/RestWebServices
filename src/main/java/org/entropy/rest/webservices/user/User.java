@@ -1,15 +1,18 @@
 package org.entropy.rest.webservices.user;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
+import org.entropy.rest.webservices.post.Posts;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
@@ -27,6 +30,9 @@ public class User {
 	@NotNull
 	@JsonIgnore
 	private Date dob;
+	
+	@OneToMany(mappedBy = "user")
+	private List<Posts> posts; 
 	
 	public User() {
 	}
@@ -55,6 +61,15 @@ public class User {
 	}
 	public void setDob(Date dob) {
 		this.dob = dob;
+	}
+	
+
+	public List<Posts> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<Posts> posts) {
+		this.posts = posts;
 	}
 
 	@Override

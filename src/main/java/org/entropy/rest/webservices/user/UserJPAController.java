@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.entropy.rest.webservices.post.Posts;
+import org.entropy.rest.webservices.post.PostsRepository;
 import org.entropy.rest.webservices.user.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
@@ -31,6 +33,8 @@ public class UserJPAController {
 	@Autowired
 	UserRepository userRepository;
 	
+	@Autowired
+	PostsRepository postsRepository;
 	/**
 	//Query String
 	@GetMapping(path="/hello")
@@ -76,5 +80,25 @@ public class UserJPAController {
 	public  void deleteUser(@PathVariable Integer id) {
 		userRepository.deleteById(id);
 		
+	}
+	
+	@GetMapping(path="/jpa/users/{id}/posts")
+	public List<Posts> getPosts(@PathVariable Integer id){
+		Optional<User> userOptional=userRepository.findById(id);
+		if(!userOptional.isPresent())
+			throw new UserNotFoundException("User with id: "+id+" not present");
+		return userOptional.get().getPosts();	 
+	}
+	
+	@PostMapping(path="/jpa/users/{id}/posts")
+	public Posts savePosts(@PathVariable Integer id,@RequestBody Posts post) {
+		Optional<User> userOptional=userRepository.findById(id);
+		if(!userOptional.isPresent())
+			throw new UserNotFoundException("User with id: "+id+" not present");
+		User user=userOptional.get();
+		post.setUser(user);
+		Posts savedPosts=postsRepository.save(post);
+		
+		return savedPosts;
 	}
 }

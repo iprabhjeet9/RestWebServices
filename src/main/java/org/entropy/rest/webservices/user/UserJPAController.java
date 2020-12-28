@@ -41,21 +41,14 @@ public class UserJPAController {
 	
 	
 	@GetMapping(path="/jpa/users")
-	public MappingJacksonValue getAllUser() {
+	public List<User> getAllUser() {
 		List<User> users= userRepository.findAll();
-		
-		SimpleBeanPropertyFilter filter= SimpleBeanPropertyFilter.filterOutAllExcept("id","name");
-		FilterProvider filters = new SimpleFilterProvider().addFilter("simplefilter", filter);
-		MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(users);
-		
-		mappingJacksonValue.setFilters(filters);
-		
-		return mappingJacksonValue;
+		return users;
 	}
 	
 	//getOneUser
 	@GetMapping(path="/jpa/users/{id}")
-	public MappingJacksonValue getOneUser(@PathVariable Integer id) {
+	public EntityModel<Optional<User>> getOneUser(@PathVariable Integer id) {
 		Optional<User> user = userRepository.findById(id);
 		if (!user.isPresent())
 			throw new UserNotFoundException("User with id: "+id+" not present");
@@ -65,26 +58,16 @@ public class UserJPAController {
 		
 		resource.add(linkto.withRel("All-users"));
 		
-		SimpleBeanPropertyFilter filter= SimpleBeanPropertyFilter.filterOutAllExcept("id","name","dob");
-		FilterProvider filters = new SimpleFilterProvider().addFilter("simplefilter", filter);
-		MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(resource);
 		
-		mappingJacksonValue.setFilters(filters);
-		
-		return mappingJacksonValue;
+		return resource;
 	}
 	
 	//saveUser
 	@PostMapping(path="/jpa/users")
-	public MappingJacksonValue saveUser(@Valid @RequestBody User user) {
+	public User saveUser(@Valid @RequestBody User user) {
 		User savedUser = userRepository.save(user);
-		SimpleBeanPropertyFilter filter= SimpleBeanPropertyFilter.filterOutAllExcept("id","name","dob");
-		FilterProvider filters = new SimpleFilterProvider().addFilter("simplefilter", filter);
-		MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(savedUser);
 		
-		mappingJacksonValue.setFilters(filters);
-		
-		return mappingJacksonValue;
+		return savedUser;
 	}
 	
 	//deletUser

@@ -14,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
-@JsonFilter("simplefilter")
 public class User {
 	
 	@Id
@@ -26,6 +25,7 @@ public class User {
 	
 	@Past
 	@NotNull
+	@JsonIgnore
 	private Date dob;
 	
 	public User() {

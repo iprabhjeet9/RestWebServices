@@ -45,18 +45,18 @@ public class UserJPAController {
 	
 	
 	@GetMapping(path="/jpa/users")
-	public List<User> getAllUser() {
-		List<User> users= userRepository.findAll();
+	public List<Users> getAllUser() {
+		List<Users> users= userRepository.findAll();
 		return users;
 	}
 	
 	//getOneUser
 	@GetMapping(path="/jpa/users/{id}")
-	public EntityModel<Optional<User>> getOneUser(@PathVariable Integer id) {
-		Optional<User> user = userRepository.findById(id);
+	public EntityModel<Optional<Users>> getOneUser(@PathVariable Integer id) {
+		Optional<Users> user = userRepository.findById(id);
 		if (!user.isPresent())
 			throw new UserNotFoundException("User with id: "+id+" not present");
-		EntityModel<Optional<User>> resource = EntityModel.of(user);
+		EntityModel<Optional<Users>> resource = EntityModel.of(user);
 		
 		WebMvcLinkBuilder linkto = linkTo(methodOn(this.getClass()).getAllUser());
 		
@@ -68,8 +68,8 @@ public class UserJPAController {
 	
 	//saveUser
 	@PostMapping(path="/jpa/users")
-	public User saveUser(@Valid @RequestBody User user) {
-		User savedUser = userRepository.save(user);
+	public Users saveUser(@Valid @RequestBody Users user) {
+		Users savedUser = userRepository.save(user);
 		
 		return savedUser;
 	}
@@ -84,7 +84,7 @@ public class UserJPAController {
 	
 	@GetMapping(path="/jpa/users/{id}/posts")
 	public List<Posts> getPosts(@PathVariable Integer id){
-		Optional<User> userOptional=userRepository.findById(id);
+		Optional<Users> userOptional=userRepository.findById(id);
 		if(!userOptional.isPresent())
 			throw new UserNotFoundException("User with id: "+id+" not present");
 		return userOptional.get().getPosts();	 
@@ -92,10 +92,10 @@ public class UserJPAController {
 	
 	@PostMapping(path="/jpa/users/{id}/posts")
 	public Posts savePosts(@PathVariable Integer id,@RequestBody Posts post) {
-		Optional<User> userOptional=userRepository.findById(id);
+		Optional<Users> userOptional=userRepository.findById(id);
 		if(!userOptional.isPresent())
 			throw new UserNotFoundException("User with id: "+id+" not present");
-		User user=userOptional.get();
+		Users user=userOptional.get();
 		post.setUser(user);
 		Posts savedPosts=postsRepository.save(post);
 		

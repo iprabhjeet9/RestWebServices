@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import org.entropy.rest.webservices.user.User;
+import org.entropy.rest.webservices.user.Users;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -20,13 +20,13 @@ public class Posts {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonIgnore
-	private User user;
+	private Users user;
 	
 	public Posts() {
 		
 	}
 	
-	public Posts(Integer id, String description, User user) {
+	public Posts(Integer id, String description, Users user) {
 		super();
 		this.id = id;
 		this.description = description;
@@ -45,10 +45,10 @@ public class Posts {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public User getUser() {
+	public Users getUser() {
 		return user;
 	}
-	public void setUser(User user) {
+	public void setUser(Users user) {
 		this.user = user;
 	}
 	

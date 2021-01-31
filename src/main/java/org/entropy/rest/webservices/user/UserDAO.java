@@ -9,24 +9,24 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserDAO {
-	private static List<User> users = new ArrayList<>();
+	private static List<Users> users = new ArrayList<>();
 	
 	private static int usersCount=3;
 	
 	static {
-		users.add(new User(1,"Prabh",new Date()));
-		users.add(new User(2,"John",new Date()));
-		users.add(new User(3,"Max",new Date()));		
+		users.add(new Users(1,"Prabh",new Date()));
+		users.add(new Users(2,"John",new Date()));
+		users.add(new Users(3,"Max",new Date()));		
 	}
 	
 	// findAll
-	public List<User> findAll(){
+	public List<Users> findAll(){
 		return users;
 	}
 	
 	// findOne
-	public User findOne(Integer id) {
-		for(User user:users) {
+	public Users findOne(Integer id) {
+		for(Users user:users) {
 			if(user.getId()==id) {
 				return user;
 			}
@@ -35,10 +35,10 @@ public class UserDAO {
 	}
 	// deleteOne
 	
-	public User deleteOne(Integer id) {
-		Iterator<User> iter= users.iterator();
+	public Users deleteOne(Integer id) {
+		Iterator<Users> iter= users.iterator();
 		while(iter.hasNext()) {
-			User user = iter.next();
+			Users user = iter.next();
 			if(user.getId()==id) {
 				iter.remove();
 				return user;
@@ -49,7 +49,7 @@ public class UserDAO {
 	}
 	// saveOne
 	
-	public User saveOne(User user) {
+	public Users saveOne(Users user) {
 		if(user.getId()==null)
 			user.setId(++UserDAO.usersCount);
 		users.add(user);

@@ -34,17 +34,17 @@ public class UserController {
 	
 	
 	@GetMapping(path="/users")
-	public List<User> getAllUser() {
+	public List<Users> getAllUser() {
 		return userDAO.findAll();
 	}
 	
 	//getOneUser
 	@GetMapping(path="/users/{id}")
-	public EntityModel<User> getOneUser(@PathVariable Integer id) {
-		User user = userDAO.findOne(id);
+	public EntityModel<Users> getOneUser(@PathVariable Integer id) {
+		Users user = userDAO.findOne(id);
 		if (user==null)
 			throw new UserNotFoundException("User with id: "+id+" not present");
-		EntityModel<User> resource = EntityModel.of(user);
+		EntityModel<Users> resource = EntityModel.of(user);
 		
 		WebMvcLinkBuilder linkto = linkTo(methodOn(this.getClass()).getAllUser());
 		
@@ -54,16 +54,16 @@ public class UserController {
 	
 	//saveUser
 	@PostMapping(path="/users")
-	public User saveUser(@Valid @RequestBody User user) {
-		User savedUser = userDAO.saveOne(user);
+	public Users saveUser(@Valid @RequestBody Users user) {
+		Users savedUser = userDAO.saveOne(user);
 		return savedUser;
 	}
 	
 	//deletUser
 	
 	@DeleteMapping(path="/users/{id}")
-	public User deleteUser(@PathVariable Integer id) {
-		User user=userDAO.deleteOne(id);
+	public Users deleteUser(@PathVariable Integer id) {
+		Users user=userDAO.deleteOne(id);
 		if(user == null)
 			throw new UserNotFoundException("User with id: "+id+" not present");
 		return user;

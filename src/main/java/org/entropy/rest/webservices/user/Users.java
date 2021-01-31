@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
-public class User {
+public class Users {
 	
 	@Id
 	@GeneratedValue
@@ -27,17 +27,16 @@ public class User {
 	private String name;
 	
 	@Past
-	@NotNull
 	@JsonIgnore
 	private Date dob;
 	
 	@OneToMany(mappedBy = "user")
 	private List<Posts> posts; 
 	
-	public User() {
+	public Users() {
 	}
 	
-	public User(Integer id, String name, Date dob) {
+	public Users(Integer id, String name, Date dob) {
 		super();
 		this.id = id;
 		this.name = name;

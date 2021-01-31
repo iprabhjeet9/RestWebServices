@@ -1,0 +1,2 @@
+when object is return it uses getter methods to return the fields
+the fields which have getter or public will be returned.
